@@ -14,7 +14,7 @@ namespace Aoc2021.Tests
         [InlineData("forward -1", Directions.Forward, -1)]
         [InlineData("forward 70999", Directions.Forward, 70999)]
         [InlineData("down 15", Directions.Down, 15)]
-        [InlineData("up  8", Directions.Up, 8)]
+        [InlineData("up 8", Directions.Up, 8)]
         public void TestCommands(string commandText, Directions direction, int steps)
         {
             var command = new Command(commandText);

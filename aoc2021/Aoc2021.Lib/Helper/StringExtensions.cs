@@ -25,5 +25,4 @@ namespace Aoc2021.Lib.Helper
             }
         }
     }
-
 }
