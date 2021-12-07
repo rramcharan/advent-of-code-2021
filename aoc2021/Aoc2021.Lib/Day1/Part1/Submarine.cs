@@ -1,6 +1,6 @@
 ﻿using Aoc2021.Lib.Helper;
 
-namespace Aoc2021.Day1
+namespace Aoc2021.Lib.Day1.Part1
 {
     public class Submarine
     {

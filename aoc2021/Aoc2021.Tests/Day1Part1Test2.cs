@@ -1,27 +1,25 @@
 using Aoc2021.Lib.Day1;
 using Aoc2021.Lib.Day1.Part1;
+using Aoc2021.Lib.Day1.Part2;
 using Xunit;
 using Shouldly;
 
 namespace Aoc2021.Tests
 {
-    public class Day1Part1Test1
+    public class Day1Part1Test2
     {
         [Fact]
         public void Test01()
         {
-            var submarine = new Submarine();
+            var submarine = new SubmarinePart2();
             submarine.RegisterDepth(100);
             submarine.NumberOfDepthIncreases.ShouldBe(0);
-            submarine.RegisterDepth(100);
-            submarine.NumberOfDepthIncreases.ShouldBe(0);
-
             submarine.RegisterDepth(101);
-            submarine.NumberOfDepthIncreases.ShouldBe(1);
-
+            submarine.NumberOfDepthIncreases.ShouldBe(0);
+            submarine.RegisterDepth(102);
+            submarine.NumberOfDepthIncreases.ShouldBe(0);
             submarine.RegisterDepth(500);
-            submarine.NumberOfDepthIncreases.ShouldBe(2);
-
+            submarine.NumberOfDepthIncreases.ShouldBe(1);
             submarine.RegisterDepth(400);
             submarine.NumberOfDepthIncreases.ShouldBe(2);
 
@@ -30,15 +28,15 @@ namespace Aoc2021.Tests
         [Fact]
         public void TestExample01()
         {
-            var submarine = Submarine.ReadLines(Test1Input);
-            submarine.NumberOfDepthIncreases.ShouldBe(7);
+            var submarine = SubmarinePart2.ReadLines(Test1Input);
+            submarine.NumberOfDepthIncreases.ShouldBe(5);
         }
 
         [Fact]
         public void TestPuzzle01()
         {
-            var submarine = Submarine.ReadLines(InputPuzzle1);
-            submarine.NumberOfDepthIncreases.ShouldBe(1448);
+            var submarine = SubmarinePart2.ReadLines(InputPuzzle1);
+            submarine.NumberOfDepthIncreases.ShouldBe(1471);
         }
 
         #region input...
