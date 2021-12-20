@@ -1,34 +1,70 @@
-using Aoc2021.Lib.Day05.Part1;
+using Aoc2021.Lib.Day05.Part2;
 using Shouldly;
 using Xunit;
 
 namespace Aoc2021.Tests.Day05Tests
 {
-    public class Day05Part1Tests
+    public class Day05Part2Tests
     {
-        #region Line
-
-        [Theory]
-        [InlineData("0,9 -> 5,9", 0, 9, 5, 9)]
-        [InlineData("3,4 -> 1,4", 3, 4, 1, 4)]
-        [InlineData("757,158 -> 49,866", 757, 158, 49, 866)]
-        public void TestLines(string coords, int x1, int y1, int x2, int y2)
-        {
-            var line = new DiagranD05P1.Line(coords);
-            line.X1.ShouldBe(x1);
-            line.Y1.ShouldBe(y1);
-            line.X2.ShouldBe(x2);
-            line.Y2.ShouldBe(y2);
-        }
-
-        #endregion
-
         #region Draw lines
 
-        [Fact]
-        public void TestOneLine()
+        [Theory]
+        [InlineData("3,4 -> 3,9", 0, 1)]
+        [InlineData("7,5 -> 7,2", 0, -1)]
+        public void TestIsHorizontalLine(string coords, int incrementX, int incrementY)
         {
-            var diagram = DiagranD05P1.Load(10, "0,9 -> 5,9");
+            var line = new DiagranD05P2.Line(coords);
+            line.IsHorizontalLine.ShouldBe(true);
+            line.IsVerticalLine.ShouldBe(false);
+            line.IsDiagonalLine.ShouldBe(false);
+            line.IncrementX.ShouldBe(incrementX);
+            line.IncrementY.ShouldBe(incrementY);
+        }
+        
+        [Theory]
+        [InlineData("0,9 -> 5,9", 1, 0)]
+        [InlineData("3,4 -> 1,4", -1, 0)]
+        [InlineData("5,5 -> 9,5", 1, 0)]
+        public void TestIsVerticalLine(string coords, int incrementX, int incrementY)
+        {
+            var line = new DiagranD05P2.Line(coords);
+            line.IsVerticalLine.ShouldBe(true);
+            line.IsHorizontalLine.ShouldBe(false);
+            line.IsDiagonalLine.ShouldBe(false);
+            line.IncrementX.ShouldBe(incrementX);
+            line.IncrementY.ShouldBe(incrementY);
+        }
+        
+
+        [Theory]
+        [InlineData("1,1 -> 3,3", 1, 1)]
+        [InlineData("3,3 -> 1,1", -1, -1)]
+        [InlineData("9,7 -> 7,9", -1, 1)]
+        [InlineData("7,9 -> 9,7", 1, -1)]
+        public void TestIsDiagonalLine(string coords, int incrementX, int incrementY)
+        {
+            var line = new DiagranD05P2.Line(coords);
+            line.IsDiagonalLine.ShouldBe(true);
+            line.IsHorizontalLine.ShouldBe(false);
+            line.IncrementX.ShouldBe(incrementX);
+            line.IncrementY.ShouldBe(incrementY);
+        }
+        
+        [Theory]
+        [InlineData("0,9 -> 5,6")]
+        [InlineData("3,2 -> 6,4")]
+        public void TestIsNotHorizontalAndNotDiagonalLine(string coords)
+        {
+            var line = new DiagranD05P2.Line(coords);
+            line.IsHorizontalLine.ShouldBe(false);
+            line.IsDiagonalLine.ShouldBe(false);
+        }
+        
+
+        [Fact]
+        public void TestHorizontalLine()
+        {
+            var diagram = DiagranD05P2.Load(10, "0,9 -> 5,9");
             diagram.Print().ShouldBe(@"
 ..........
 ..........
@@ -43,9 +79,43 @@ namespace Aoc2021.Tests.Day05Tests
         }
         
         [Fact]
+        public void TestVerticalLine()
+        {
+            var diagram = DiagranD05P2.Load(10, "2,4 -> 2,7");
+            diagram.Print().ShouldBe(@"
+..........
+..........
+..........
+..........
+..1.......
+..1.......
+..1.......
+..1.......
+..........
+..........");
+        }
+        
+        [Fact]
+        public void TestDiagonalLine()
+        {
+            var diagram = DiagranD05P2.Load(10, "1,1 -> 3,3");
+            diagram.Print().ShouldBe(@"
+..........
+.1........
+..1.......
+...1......
+..........
+..........
+..........
+..........
+..........
+..........");
+        }
+        
+        [Fact]
         public void TestExample01()
         {
-            var diagram = DiagranD05P1.Load(10, @"0,9 -> 5,9
+            var diagram = DiagranD05P2.Load(10, @"0,9 -> 5,9
 8,0 -> 0,8
 9,4 -> 3,4
 2,2 -> 2,1
@@ -56,25 +126,25 @@ namespace Aoc2021.Tests.Day05Tests
 0,0 -> 8,8
 5,5 -> 8,2");
             diagram.Print().ShouldBe(@"
-.......1..
-..1....1..
-..1....1..
-.......1..
-.112111211
-..........
-..........
-..........
-..........
+1.1....11.
+.111...2..
+..2.1.111.
+...1.2.2..
+.112313211
+...1.2....
+..1...1...
+.1.....1..
+1.......1.
 222111....");
 
-            diagram.NbrOfDangerousAreas.ShouldBe(5);
+            diagram.NbrOfDangerousAreas.ShouldBe(12);
         }
         
         [Fact]
         public void TestPuzzle()
         {
-            var diagram = DiagranD05P1.Load(1000, InputPuzzle);
-            diagram.NbrOfDangerousAreas.ShouldBe(5124);
+            var diagram = DiagranD05P2.Load(1000, InputPuzzle);
+            diagram.NbrOfDangerousAreas.ShouldBe(19771);
         }
         
         
