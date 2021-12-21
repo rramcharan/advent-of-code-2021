@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Aoc2021.Tests.Day21Tests
 {
-    public class Day21Part1Tests
+    public class Day21Part2Tests
     {
         [Theory]
         [InlineData(1, 5, 5)]
@@ -18,7 +18,7 @@ namespace Aoc2021.Tests.Day21Tests
         [InlineData(7, 1, 1)]
         public void TestSteps(int steps, int expectedPosition, int expectedScore)
         {
-            var player = new PuzzleD21P1.Player(4);
+            var player = new PuzzleD21P2.Player(4);
             
             player.Rolls(steps);
             player.Position.ShouldBe(expectedPosition);
@@ -28,7 +28,7 @@ namespace Aoc2021.Tests.Day21Tests
         [Fact]
         public void TestOneStepByOneStep()
         {
-            var player = new PuzzleD21P1.Player(4);
+            var player = new PuzzleD21P2.Player(4);
             
             player.Rolls(1);
             player.Position.ShouldBe(5);
@@ -66,8 +66,8 @@ namespace Aoc2021.Tests.Day21Tests
         [Fact]
         public void TestExample01()
         {
-            var player1 = new PuzzleD21P1.Player(4);
-            var player2 = new PuzzleD21P1.Player(8);
+            var player1 = new PuzzleD21P2.Player(4);
+            var player2 = new PuzzleD21P2.Player(8);
             
             player1.Rolls(1+2+3);
             player1.Position.ShouldBe(10);
@@ -97,7 +97,7 @@ namespace Aoc2021.Tests.Day21Tests
         [Fact]
         public void TestExample02()
         {
-            var game = PuzzleD21P1.Start(4,8);
+            var game = PuzzleD21P2.Start(4,8);
             var player1 = game.Player1;
             var player2 = game.Player2;
 
@@ -129,7 +129,7 @@ namespace Aoc2021.Tests.Day21Tests
         [Fact]
         public void TestExampleAutoPlay()
         {
-            var game = PuzzleD21P1.Start(4,8);
+            var game = PuzzleD21P2.Start(4,8);
             var player1 = game.Player1;
             var player2 = game.Player2;
 
@@ -142,8 +142,8 @@ namespace Aoc2021.Tests.Day21Tests
             player2.Position.ShouldBe(3);
             player2.Score.ShouldBe(745);
             
-            game.Dice.ShouldBe(93);
-            game.NbrOfRolledDie.ShouldBe(993);
+            game.Dice.Dice.ShouldBe(93);
+            game.Dice.NbrOfRolledDie.ShouldBe(993);
 
             game.TotalScoreLoose.ShouldBe(739785);
         }
@@ -151,7 +151,7 @@ namespace Aoc2021.Tests.Day21Tests
         [Fact]
         public void TextPuzzel()
         {
-            var game = PuzzleD21P1.Start(10,8);
+            var game = PuzzleD21P2.Start(10,8);
             game.Play();
             game.TotalScoreLoose.ShouldBe(752247);
         }
