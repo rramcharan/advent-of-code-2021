@@ -8,59 +8,20 @@ namespace Aoc2021.Tests.Day21Tests
 {
     public class Day21Part2Tests
     {
-        [Theory]
-        [InlineData(1, 5, 5)]
-        [InlineData(2, 6, 6)]
-        [InlineData(3, 7, 7)]
-        [InlineData(4, 8, 8)]
-        [InlineData(5, 9, 9)]
-        [InlineData(6, 10, 10)]
-        [InlineData(7, 1, 1)]
-        public void TestSteps(int steps, int expectedPosition, int expectedScore)
-        {
-            var player = new PuzzleD21P2.Player(4);
-            
-            player.Rolls(steps);
-            player.Position.ShouldBe(expectedPosition);
-            player.Score.ShouldBe(expectedScore);
-        }
-        
         [Fact]
-        public void TestOneStepByOneStep()
+        public void TestDiracDice01()
         {
-            var player = new PuzzleD21P2.Player(4);
-            
-            player.Rolls(1);
-            player.Position.ShouldBe(5);
-            player.Score.ShouldBe(5);
-            
-            player.Rolls(1);
-            player.Position.ShouldBe(6);
-            player.Score.ShouldBe(11);
-            
-            player.Rolls(1);
-            player.Position.ShouldBe(7);
-            player.Score.ShouldBe(18);
-            
-            player.Rolls(1);
-            player.Position.ShouldBe(8);
-            player.Score.ShouldBe(26);
-            
-            player.Rolls(1);
-            player.Position.ShouldBe(9);
-            player.Score.ShouldBe(35);
-            
-            player.Rolls(1);
-            player.Position.ShouldBe(10);
-            player.Score.ShouldBe(45);
-            
-            player.Rolls(1);
-            player.Position.ShouldBe(1);
-            player.Score.ShouldBe(46);
-            
-            player.Rolls(1);
-            player.Position.ShouldBe(2);
-            player.Score.ShouldBe(48);
+            var dice = new PuzzleD21P2.DiracDice();
+            dice.NbrOfUniverses.ShouldBe(0);
+
+            dice.RoleDices();
+            dice.NbrOfUniverses.ShouldBe(3);
+            dice.Universes[0].StartingNumber.ShouldBe(1);
+            dice.Universes[1].StartingNumber.ShouldBe(2);
+            dice.Universes[2].StartingNumber.ShouldBe(3);
+
+            dice.RoleDices();
+            dice.NbrOfUniverses.ShouldBe(3);
         }
 
         [Fact]
@@ -143,7 +104,7 @@ namespace Aoc2021.Tests.Day21Tests
             player2.Score.ShouldBe(745);
             
             game.Dice.Dice.ShouldBe(93);
-            game.Dice.NbrOfRolledDie.ShouldBe(993);
+            game.Dice.NbrOfUniverses.ShouldBe(993);
 
             game.TotalScoreLoose.ShouldBe(739785);
         }

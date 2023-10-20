@@ -11,7 +11,7 @@ namespace Aoc2021.Lib.Day21.Part1
     {
         private PuzzleD21P2(int positionPlayer1, int positionPlayer2)
         {
-            Dice = new OneHunderedSidedDice();
+            Dice = new DiracDice();
             Player1 = new Player(positionPlayer1);
             Player2 = new Player(positionPlayer2);
             TurnOfPlayer1 = true;
@@ -22,7 +22,7 @@ namespace Aoc2021.Lib.Day21.Part1
             return new PuzzleD21P2(positionPlayer1, positionPlayer2);
         }
         
-        public OneHunderedSidedDice Dice { get; private set; }
+        public DiracDice Dice { get; private set; }
 
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
@@ -37,7 +37,7 @@ namespace Aoc2021.Lib.Day21.Part1
                 ? Player2
                 : Player1;
 
-        public int TotalScoreLoose => Dice.NbrOfRolledDie * Looser?.Score ?? 0;
+        public int TotalScoreLoose => Dice.NbrOfUniverses * Looser?.Score ?? 0;
         public void Play()
         {
             while (Winner == null)
@@ -73,29 +73,62 @@ namespace Aoc2021.Lib.Day21.Part1
             }
         }
 
-        public class OneHunderedSidedDice
+        public class DiracDice
         {
-            public OneHunderedSidedDice()
+            public DiracDice()
             {
-                NbrOfRolledDie = 0;
+                Universes = new List<Universe>();
             }
+            public List<Universe> Universes { get;  }
             public int Dice { get; set; }
-            public int NbrOfRolledDie { get; set; }
+            public int NbrOfUniverses => Universes.Count;
 
             public int RoleDices()
             {
                 var dices = NextDice() + NextDice() +NextDice();
                 return dices;
-
-            }            
-            private int NextDice()
-            {
-                NbrOfRolledDie++;
-                Dice = 1+(Dice % 100);
-                return Dice;
             }
             
+            private int NextDice()
+            {
+                Dice = 1+(Dice % 3);
+                Universes.Add(new Universe(Dice));
+                return Dice;
+            }
         }
+
+        public class Universe
+        {
+            public readonly int StartingNumber;
+            public Universe(int startingNumber)
+            {
+                StartingNumber = startingNumber;
+
+            }
+        }
+        // public class OneHunderedSidedDice
+        // {
+        //     public OneHunderedSidedDice()
+        //     {
+        //         NbrOfRolledDie = 0;
+        //     }
+        //     public int Dice { get; set; }
+        //     public int NbrOfRolledDie { get; set; }
+        //
+        //     public int RoleDices()
+        //     {
+        //         var dices = NextDice() + NextDice() +NextDice();
+        //         return dices;
+        //
+        //     }            
+        //     private int NextDice()
+        //     {
+        //         NbrOfRolledDie++;
+        //         Dice = 1+(Dice % 100);
+        //         return Dice;
+        //     }
+        //     
+        // }
 
     }
 }
